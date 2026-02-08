@@ -12,9 +12,9 @@ export default async function Header() {
     <header className="bg-white border-b py-4">
       <div className="max-w-4xl flex justify-between mx-auto px-6">
         <div className="flex items-center gap-6">
-          <Link href={"/"} className="flex items-center gap-2">
+          <Link href={"/"} className="flex items-center gap-1">
             <FontAwesomeIcon icon={faLinktree} className="text-2xl"/>
-            <span className="font-bold">My Linktree</span>
+            <span className="font-bold">MyLinktree</span>
           </Link>
           <nav className="flex items-center gap-4 text-slate-500 text-sm">
             <Link href={"/about"}>About</Link>

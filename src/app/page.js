@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Header from "../components/header";
+import Heroform from "@/components/forms/Heroform";
 
 export default function Home() {
   return (
@@ -13,15 +14,7 @@ export default function Home() {
             เพื่อให้ข้าถึงผลงานและช่องทางติดต่อได้อย่างรวดเร็ว
           </h2>
         </div>
-          <form className="inline-flex items-center shadow-lg shadow-gray500/20 rounded-xl overflow-hidden">
-            <span className="bg-white py-4 pl-4">
-              my linktree.to/
-            </span>
-            <input type="text" className="py-4 bg-white" placeholder="username"/>
-            <button type="submit" className="bg-blue-500 text-white py-4 px-6">
-              Get Started
-            </button>
-          </form>
+        <Heroform />
       </section>
     </main>
   );

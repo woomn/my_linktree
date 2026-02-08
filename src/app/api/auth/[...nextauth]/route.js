@@ -4,6 +4,7 @@ import clientPromise from "@/libs/mongoClient";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 
 export const authOptions = {
+  secret: process.env.SECRET,
   adapter: MongoDBAdapter(clientPromise),
 
   providers: [
