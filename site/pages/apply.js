@@ -1,24 +1,57 @@
-import React,{ useState } from 'react'
-import styles from '../styles/Apply.module.css';
-import {toast} from 'react-toastify';
-import Link from 'next/link';
+import React, { useState } from "react";
+import styles from "../styles/Apply.module.css";
+import { toast } from "react-toastify";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const Apply = () => {
+  const router = useRouter();
+  const [handle, setHandle] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [category, setCategory] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
-  const [handle, setHandle] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [categoly, setCategory] = useState('');
-  
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
-  }
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
-    if(!categoly) return toast.error('add a category please!', {type: 'error'});
-    toast('You are registered successfully!', {type: 'success'});
-  }
+    if (!category)
+      return toast.error("add a category please!", { type: "error" });
+    //backend part
+    fetch("http://localhost:8080/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        handle,
+        email,
+        password,
+        category,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Data from Backend:", data);
+
+        if (data.status === "success" || data.message === "user created") {
+          toast.success("Registered Successfully!");
+          localStorage.setItem("LinkTreeToken", data.token);
+          router.push("/login");
+        } else if (
+          data.message.includes("E11000") ||
+          data.message.includes("duplicate")
+        ) {
+          // ถ้าเจอ Error เรื่องข้อมูลซ้ำ
+          toast.error("Email หรือ Username นี้ถูกใช้ไปแล้ว");
+        } else {
+          toast.error(data.message);
+        }
+      });
+  };
   return (
     <>
       <section
@@ -75,7 +108,7 @@ export const Apply = () => {
                   <input
                     type="checkbox"
                     value="Creator"
-                    checked={categoly === "Creator"}
+                    checked={category === "Creator"}
                     onChange={handleCategoryChange}
                   />
                   <p className="pl-2">Creator</p>
@@ -84,7 +117,7 @@ export const Apply = () => {
                   <input
                     type="checkbox"
                     value="Agency"
-                    checked={categoly === "Agency"}
+                    checked={category === "Agency"}
                     onChange={handleCategoryChange}
                   />
                   <p className="pl-2">Agency</p>
@@ -93,7 +126,7 @@ export const Apply = () => {
                   <input
                     type="checkbox"
                     value="Brand"
-                    checked={categoly === "Brand"}
+                    checked={category === "Brand"}
                     onChange={handleCategoryChange}
                   />
                   <p className="pl-2">Brand</p>
@@ -107,11 +140,16 @@ export const Apply = () => {
               />
             </form>
           </div>
-          <h4 className="pt-3 text-center text-white">Already have an account? <Link className="font-bold" href='/Login'>Click</Link></h4>
+          <h4 className="pt-3 text-center text-white">
+            Already have an account?{" "}
+            <Link className="font-bold" href="/Login">
+              Click
+            </Link>
+          </h4>
         </div>
       </section>
     </>
   );
-}
+};
 
 export default Apply;
