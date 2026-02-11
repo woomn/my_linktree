@@ -3,14 +3,50 @@ import styles from "../styles/Apply.module.css";
 import { toast } from "react-toastify";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export const Apply = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Apply.js ส่วนของ handleLogin
+
   const handleLogin = (e) => {
     e.preventDefault();
-    toast("You are logged in successfully!");
+
+    fetch("http://localhost:8080/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // 1. เช็คกรณีสำเร็จ
+        if (data.status === "success") {
+          toast.success("Login Successful!");
+          console.log("Token:", data.token); // โชว์ token ให้ดูหน่อย
+          localStorage.setItem("LinkTreeToken", data.token);
+          router.push("/dashboard");
+        }
+        // 2. เช็คกรณีไม่เจอ User หรือรหัสผิด
+        else if (data.status === "not found") {
+          toast.error("User not found or Password incorrect!");
+        }
+        // 3. ดัก Error อื่นๆ ที่อาจจะเกิดขึ้น
+        else {
+          toast.error("Login failed.");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Server Error");
+      });
   };
   return (
     <>
@@ -69,6 +105,6 @@ export const Apply = () => {
       </section>
     </>
   );
-};
+};;
 
 export default Apply;
