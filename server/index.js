@@ -4,6 +4,7 @@ const application = express();
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 const { registerUser, loginUser } = require('./controllers/auth');
+const { dashboardData } = require('./controllers/dashboard');
 require('dotenv').config();
 
 application.use(cors());
@@ -18,6 +19,8 @@ application.get('/', (req, res) => {
 
 application.post('/api/register', registerUser);
 application.post('/api/login', loginUser);
+
+application.post('/data/dashboard', dashboardData);
 
 const port = process.env.PORT || 8080;
 
