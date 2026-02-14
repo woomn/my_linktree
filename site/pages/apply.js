@@ -21,7 +21,7 @@ export const Apply = () => {
     if (!category)
       return toast.error("add a category please!", { type: "error" });
     //backend part
-    fetch("http://localhost:8080/api/register", {
+      fetch("http://localhost:8080/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export const Apply = () => {
               className="flex flex-col gap-4 mt-5 text-lg"
             >
               <span className="flex flex-row px-3 py-2 border-2 rounded-md shadow-md focus:outline-one">
-                <img className="w-6 mr-4" src="/svg/ig.svg" alt="" />
+                <img className="w-6 mr-4" src="/svg/profile.svg" alt="Profile Icon" />
                 <input
                   value={handle}
                   onChange={(e) => setHandle(e.target.value)}
@@ -142,7 +142,7 @@ export const Apply = () => {
           </div>
           <h4 className="pt-3 text-center text-white">
             Already have an account?{" "}
-            <Link className="font-bold" href="/Login">
+            <Link className="font-bold" href="/login">
               Click
             </Link>
           </h4>
