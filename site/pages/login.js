@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../styles/Apply.module.css";
+import styles from "../styles/apply.module.css";
 import { toast } from "react-toastify";
 import Footer from "@/components/Footer";
 import Link from "next/link";
