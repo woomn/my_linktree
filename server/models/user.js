@@ -16,9 +16,10 @@ const userSchema = new Schema({
     }],
     socialMedia: {
         facebook: { type: String },
-        twitter: { type: String },
+        x: { type: String },
         instagram: { type: String },
         youtube: { type: String },
+        tiktok: {type: String },
         github: { type: String }
     }
 }, { collection: 'users-data-linktree' });
