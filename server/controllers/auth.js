@@ -6,9 +6,9 @@ const registerUser = async (req, res) => {
   console.log(req.body);
   try {
     const defaultLinks = {
-      url: "typefinance.com",
-      title: "TypeFinance",
-      icon: "",
+      url: "My-Linktree.com",
+      title: "My Linktree",
+      icon: "/svg/logo.svg",
     };
     const user = await User.create({
       handle,

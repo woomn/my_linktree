@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import LinkBox from "@/components/LinkBox";
 import UserHeader from "@/components/UserHeader";
 import { toast } from "react-toastify";
+import UserContext from "@/context/userContext";
 
 const dashboard = () => {
 
   const [data, setData] = useState({});
+  const { setUserData } = useContext(UserContext);
 
   useEffect(() => {
     if (!localStorage.getItem("LinkTreeToken")) {
@@ -29,8 +31,9 @@ const dashboard = () => {
         }
 
         setData(data.userData);
+        setUserData(data.userData);
         localStorage.setItem("userHandle", data.userData.handle);
-        toast.success(data.message);
+        // toast.success(data.message);
       })
       .catch((err) => {
         console.error("Dashboard fetch error:", err);
@@ -40,7 +43,7 @@ const dashboard = () => {
 
   return (
     <div>
-      <UserHeader data={data} />
+      <UserHeader />
 
       <main>
         <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">

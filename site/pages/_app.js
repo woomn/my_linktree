@@ -1,17 +1,26 @@
 import "../styles/globals.css";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Footer from "../components/Footer";
 import NavBar from "../components/Navbar";
 import NProgress from 'nprogress';
 import '../public/nprogress.css';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Script from 'next/script';
+import UserContext from "@/context/userContext";
+
 
 export default function App({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  const [userData, setUserData] = useState({
+    name: '',
+    role: '',
+    bio: '',
+    avatar: '',
+    handle: ''
+  })
 
   useEffect(() => {
     const handleStart = () => {
@@ -48,10 +57,11 @@ export default function App({ Component, pageProps }) {
                     });
                 `}
     </Script>
-    <Component {...pageProps} />
+    <UserContext.Provider value={{userData, setUserData}}>
+      <Component {...pageProps} />
+    </UserContext.Provider>
     <ToastContainer />
     {isLoading && <div className="nprogress-custom-parent"><div className="nprogress-custom-bar"/></div>}
-    <Footer/>
 
     </>
   ) 
