@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import NavBar from "../components/Navbar";
 import NProgress from 'nprogress';
 import '../public/nprogress.css';
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Script from 'next/script';
 import UserContext from "@/context/userContext";
-
+import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +45,31 @@ export default function App({ Component, pageProps }) {
 
   return(
     <>
+    <Head>
+      {/* เพิ่มฟอนต์โมเดิร์น (Plus Jakarta Sans) เข้าไปทั้งโปรเจกต์ */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      
+      {/* ปรับแต่งสี NProgress ให้เป็นสี Indigo โดยตรงผ่าน CSS Injection */}
+      <style>{`
+        #nprogress .bar {
+          background: #6366f1 !important;
+          height: 3px !important;
+        }
+        #nprogress .spinner-icon {
+          border-top-color: #6366f1 !important;
+          border-left-color: #6366f1 !important;
+        }
+        body {
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          background-color: #f8fafc; /* Slate-50: พื้นหลังเทาจางๆ ช่วยให้การ์ดสีขาวดูเด่น */
+        }
+      `}</style>
+    </Head>
+
     <NavBar/>
+    
     <Script strategy="lazyOnload" src={`https://www.googletagmanager.com/gtag/js?id=G-WYTYXQXVK6`} />
     <Script strategy="lazyOnload">
                 {`
@@ -57,12 +81,36 @@ export default function App({ Component, pageProps }) {
                     });
                 `}
     </Script>
-    <UserContext.Provider value={{userData, setUserData}}>
-      <Component {...pageProps} />
-    </UserContext.Provider>
-    <ToastContainer />
-    {isLoading && <div className="nprogress-custom-parent"><div className="nprogress-custom-bar"/></div>}
 
+    <UserContext.Provider value={{userData, setUserData}}>
+      {/* ครอบเนื้อหาด้วยขอบเขตที่นุ่มนวล และจัดการเรื่องความสูงขั้นต่ำ */}
+      <main className="min-h-screen selection:bg-indigo-100 selection:text-indigo-700">
+        <Component {...pageProps} />
+      </main>
+    </UserContext.Provider>
+
+    {/* ปรับแต่ง Toast ให้ดูพรีเมียมขึ้น */}
+    <ToastContainer 
+      position="bottom-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      toastStyle={{ borderRadius: '16px', border: '1px solid #f1f5f9' }}
+    />
+
+    {isLoading && (
+      <div className="fixed inset-0 z-[9999] pointer-events-none">
+        <div className="nprogress-custom-parent">
+          <div className="nprogress-custom-bar bg-indigo-600 shadow-[0_0_10px_#6366f1]" />
+        </div>
+      </div>
+    )}
     </>
   ) 
 }
