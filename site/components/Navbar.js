@@ -46,7 +46,7 @@ const NavBar = () => {
             </button>
 
             <div className={`${mobileMenuOpen ? "block" : "hidden"} w-full md:block md:w-auto transition-all`} id="navbar-default">
-                <ul className="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-2xl bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
+                <ul className="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-2xl bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700 md:items-center">
                     <li>
                         <Link href="/" className={navLinkClass("/")}>Home</Link>
                     </li>
