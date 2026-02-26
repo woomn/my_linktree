@@ -50,7 +50,7 @@ export default function App({ Component, pageProps }) {
         {/* เพิ่มฟอนต์โมเดิร์น (Plus Jakarta Sans) เข้าไปทั้งโปรเจกต์ */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mitr:wght@400;500;600&family=Kanit:wght@400;500;600;700&family=Itim&family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet" />
 
         {/* ปรับแต่งสี NProgress ให้เป็นสี Indigo โดยตรงผ่าน CSS Injection */}
         <style>{`

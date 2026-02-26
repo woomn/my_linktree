@@ -19,6 +19,7 @@ export const profile = () => {
     const [bio, setBio] = useState('');
     const [avatar, setAvatar] = useState('https://cdn-icons-png.flaticon.com/128/847/847969.png');
     const [theme, setTheme] = useState('default');
+    const [font, setFont] = useState('Plus Jakarta Sans');
 
     const themes = [
         { id: 'default', name: '✨ Indigo Breeze', colors: 'bg-[#f8fafc] text-indigo-600 border-indigo-500' },
@@ -30,6 +31,14 @@ export const profile = () => {
         { id: 'cloud', name: '☁️ Soft Cloud', colors: 'bg-gradient-to-br from-blue-50 to-indigo-100 text-indigo-700 border-white' },
         { id: 'retro', name: '🕹️ Retro 80s', colors: 'bg-[#ff00ff] text-yellow-300 border-yellow-200' },
         { id: 'luxury', name: '💎 Gold Luxury', colors: 'bg-[#1a1a1a] text-[#ffd700] border-[#ffd700]' }
+    ]
+
+    const fonts = [
+        { name: 'Plus Jakarta Sans', family: "'Plus Jakarta Sans', sans-serif" },
+        { name: 'Mitr', family: "'Mitr', sans-serif" },
+        { name: 'Kanit', family: "'Kanit', sans-serif" },
+        { name: 'Itim', family: "'Itim', cursive" },
+        { name: 'Josefin Sans', family: "'Josefin Sans', sans-serif" }
     ]
 
     const handleSocial = (e) => {
@@ -44,6 +53,7 @@ export const profile = () => {
             setBio(userData.bio);
             setAvatar(userData.avatar);
             setTheme(userData.theme || 'default');
+            setFont(userData.font || 'Plus Jakarta Sans');
         }
     }, [userData]);
 
@@ -59,7 +69,8 @@ export const profile = () => {
                 name: name,
                 bio: bio,
                 avatar: avatar,
-                theme: theme
+                theme: theme,
+                font: font
             })
         }).then(res => res.json())
             .then(data => {
@@ -148,6 +159,23 @@ export const profile = () => {
                                             }}
                                         />
                                         {avatar && <img className='object-cover w-12 h-12 rounded-2xl border-2 border-white shadow-sm' src={avatar} alt="Avatar" />}
+                                    </div>
+                                </div>
+
+                                {/* Font Selection */}
+                                <div className="mt-4">
+                                    <label className="text-xs font-bold text-slate-400 ml-2 uppercase tracking-wider">Select Font</label>
+                                    <div className="grid grid-cols-2 gap-2 mt-2">
+                                        {fonts.map((f) => (
+                                            <div
+                                                key={f.name}
+                                                onClick={() => setFont(f.name)}
+                                                className={`cursor-pointer px-4 py-3 rounded-xl border-2 transition-all ${font === f.name ? 'border-indigo-600 bg-indigo-50 text-indigo-700' : 'border-slate-100 hover:border-indigo-200 text-slate-600'}`}
+                                                style={{ fontFamily: f.family }}
+                                            >
+                                                <span className="text-sm font-bold">{f.name}</span>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
 

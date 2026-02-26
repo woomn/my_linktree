@@ -19,7 +19,7 @@ const saveSocials = async (req, res) => {
 }
 
 const saveProfile = async (req, res) => {
-    const { tokenMail, name, bio, avatar, theme } = req.body;
+    const { tokenMail, name, bio, avatar, theme, font } = req.body;
     console.log(req.body);
     try {
         const decodedTokenMail = jwt.verify(tokenMail, process.env.SECRET_JWT);
@@ -31,6 +31,7 @@ const saveProfile = async (req, res) => {
         user.bio = bio;
         user.avatar = avatar;
         user.theme = theme || 'default';
+        user.font = font || 'Plus Jakarta Sans';
         await user.save();
         return res.json({ message: 'saved', status: 'success' });
     } catch (err) {

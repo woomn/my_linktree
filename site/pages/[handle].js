@@ -119,6 +119,16 @@ const Handle = () => {
 
     const currentTheme = themeStyles[theme] || themeStyles.default;
 
+    const fontFamilies = {
+        'Plus Jakarta Sans': "'Plus Jakarta Sans', sans-serif",
+        'Mitr': "'Mitr', sans-serif",
+        'Kanit': "'Kanit', sans-serif",
+        'Itim': "'Itim', cursive",
+        'Josefin Sans': "'Josefin Sans', sans-serif"
+    }
+
+    const currentFontFamily = fontFamilies[data.font] || fontFamilies['Plus Jakarta Sans'];
+
     if (!handle || (!apiResponse && !error)) {
         return <div className='min-h-screen flex items-center justify-center font-bold text-slate-400 animate-pulse'>Loading...</div>
     }
@@ -149,7 +159,7 @@ const Handle = () => {
     }
 
     return (
-        <div className={`min-h-screen relative pb-20 transition-all duration-700 bg-cover bg-center bg-fixed ${currentTheme.bg}`}>
+        <div className={`min-h-screen relative pb-20 transition-all duration-700 bg-cover bg-center bg-fixed ${currentTheme.bg}`} style={{ fontFamily: currentFontFamily }}>
             {/* พื้นหลังแบบฟุ้งเบาๆ ให้หน้า Profile ดูมีมิติ */}
             <div className={`absolute top-0 left-0 w-full h-[550px] bg-gradient-to-b ${currentTheme.overlay} to-transparent -z-10`}></div>
 
