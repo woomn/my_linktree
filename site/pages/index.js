@@ -14,7 +14,7 @@ export default function Home() {
       <main className="relative w-full min-h-screen bg-[#fafafa] text-[#1a1a1a] flex flex-col justify-between p-8 md:p-16">
         
         {/* 1. Top Section: Navigation-like Header */}
-        <div className="flex items-start justify-between w-full">
+        {/* <div className="flex items-start justify-between w-full">
             <div className="flex flex-col">
                 <span className="text-xs font-bold tracking-widest uppercase opacity-40">Featured</span>
                 <span className="text-sm font-medium">Template v2.0</span>
@@ -24,20 +24,20 @@ export default function Home() {
                     BUILT FOR PERFORMANCE AND DESIGNED WITH PRECISION.
                 </p>
             </div>
-        </div>
+        </div> */}
 
         {/* 2. Center Section: The "Hero" Layout */}
         <div className="w-full max-w-4xl py-20 mx-auto my-auto">
             <h1 className='text-6xl md:text-8xl font-medium tracking-tighter leading-[0.9] mb-12'>
                 Welcome to <br/>
-                <span className='pr-4 font-serif italic text-indigo-600'>NextJS</span> 
-                Featured 
+                <span className='pr-4 font-serif italic text-indigo-600'>Linktree</span> 
+                
             </h1>
 
             <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
                 <div className="max-w-sm">
                     <p className="text-lg italic font-light leading-relaxed text-slate-500">
-                        A carefully crafted foundation for developers who value aesthetic and speed in equal measure.
+                        Ready to grow your presence? Create your Linktree and connect everything with a single link.
                     </p>
                 </div>
 
@@ -62,7 +62,7 @@ export default function Home() {
         </div>
 
         {/* 3. Bottom Section: Decorative Elements */}
-        <div className="flex items-end justify-between w-full pt-8 mt-auto border-t border-slate-200">
+        {/* <div className="flex items-end justify-between w-full pt-8 mt-auto border-t border-slate-200">
             <div className="text-[10px] font-mono opacity-30">
                 CORE_SYSTEM / 2024
             </div>
@@ -71,7 +71,7 @@ export default function Home() {
                 <div className="w-2 h-2 rounded-full bg-slate-200"></div>
                 <div className="w-2 h-2 rounded-full bg-slate-200"></div>
             </div>
-        </div>
+        </div> */}
       </main>
     </>
   )
