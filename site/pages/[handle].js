@@ -28,10 +28,16 @@ const Handle = () => {
     }, [apiResponse]);
 
     if (error) return toast.error("Failed to load profile");
-    if (!apiResponse && handle) return <div className='min-h-screen flex items-center justify-center font-bold text-slate-400 animate-pulse'>Loading...</div>
-
     const userFound = apiResponse?.status === 'success';
     const data = apiResponse?.userData || {};
+
+    // ถ้ายังไม่มี Handle (หน้าเพจเพิ่งเริ่มรัน) หรือ กำลังโหลดข้อมูลจาก API 
+    // ให้ค้างไว้ที่หน้า Loading ก่อน เพื่อไม่ให้เห็น "User Not Found" แวบขึ้นมา
+    if (!handle || (!apiResponse && !error)) {
+        return <div className='min-h-screen flex items-center justify-center font-bold text-slate-400 animate-pulse'>Loading...</div>
+    }
+
+    if (error) return toast.error("Failed to load profile");
 
     if (!userFound) {
         return (
