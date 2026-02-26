@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const LinkTreeCard = ({ title, url, image, linkId, handle }) => {
   const trackClick = () => {
     if (!handle || !linkId) return;
-    fetch(`http://localhost:8080/api/track/link/${handle}`, {
+    fetch(`https://mylinktree-production.up.railway.app/api/track/link/${handle}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ linkId })

@@ -20,7 +20,7 @@ export const Apply = () => {
     if (!category)
       return toast.error("Please select an account type!", { position: "top-center" });
 
-      fetch("http://localhost:8080/api/register", {
+    fetch("https://mylinktree-production.up.railway.app/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,16 +55,16 @@ export const Apply = () => {
       <section className={styles.background + " min-h-screen flex flex-col justify-center items-center px-4 py-10"}>
         <div className="w-full max-w-md">
           <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl shadow-black/20 border border-gray-100">
-            
+
             <div className="mb-8 text-center">
-                <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
-                  Join the <span className="text-indigo-600">top 1%</span>
-                </h1>
-                <p className="mt-2 font-medium text-gray-500">Create your Hub in seconds</p>
+              <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
+                Join the <span className="text-indigo-600">top 1%</span>
+              </h1>
+              <p className="mt-2 font-medium text-gray-500">Create your Hub in seconds</p>
             </div>
 
             <form onSubmit={handleRegister} className="flex flex-col gap-5">
-              
+
               {/* Social Handle Input */}
               <div className="relative group">
                 <div className="flex items-center px-4 py-3.5 bg-slate-50 border border-gray-200 rounded-2xl focus-within:border-indigo-500 focus-within:bg-white transition-all shadow-sm">
@@ -120,11 +120,10 @@ export const Apply = () => {
                         onChange={handleCategoryChange}
                         className="hidden"
                       />
-                      <div className={`py-2 text-center rounded-xl border-2 transition-all text-sm font-bold ${
-                        category === type 
-                        ? "border-indigo-600 bg-indigo-50 text-indigo-600 shadow-inner" 
-                        : "border-gray-100 bg-white text-gray-400 hover:border-gray-200"
-                      }`}>
+                      <div className={`py-2 text-center rounded-xl border-2 transition-all text-sm font-bold ${category === type
+                          ? "border-indigo-600 bg-indigo-50 text-indigo-600 shadow-inner"
+                          : "border-gray-100 bg-white text-gray-400 hover:border-gray-200"
+                        }`}>
                         {type}
                       </div>
                     </label>

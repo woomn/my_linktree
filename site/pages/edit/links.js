@@ -3,18 +3,18 @@ import React, { useState, useEffect, useContext } from 'react'
 import { toast } from "react-toastify";
 
 export const links = () => {
-  const [links, setLinks] = useState([{url: '', title: ''}]);
+  const [links, setLinks] = useState([{ url: '', title: '' }]);
   const [title, setTitle] = useState('');
 
   const handleLinkChange = (index, field, value) => {
     const updatedLinks = [...links];
-    const linkToUpdate = { ...updatedLinks[index], [field]: value};
+    const linkToUpdate = { ...updatedLinks[index], [field]: value };
     updatedLinks[index] = linkToUpdate;
     setLinks(updatedLinks);
   }
-  
+
   const handleAddLink = () => {
-    setLinks([...links, {url: '', title: ''}]);
+    setLinks([...links, { url: '', title: '' }]);
   }
 
   const handleRemoveLink = (index) => {
@@ -32,7 +32,7 @@ export const links = () => {
       title: titlesArray[index]
     }))
 
-    fetch(`http://localhost:8080/save/links`, {
+    fetch(`https://mylinktree-production.up.railway.app/save/links`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -42,27 +42,27 @@ export const links = () => {
         links: linksData
       })
     }).then(res => res.json()).then(data => {
-      if(data.status === 'error') return toast.error(data.error);
+      if (data.status === 'error') return toast.error(data.error);
       toast.success('Links saved successfully');
-    }).catch(err => { toast.error(err.message)});
+    }).catch(err => { toast.error(err.message) });
   }
 
-      useEffect(() => {
-          if(!localStorage.getItem('LinkTreeToken')) return router.push('/login');
-          fetch(`http://localhost:8080/load/links`, {
-              method: 'POST',
-              headers: {
-                  'Content-type': 'application/json'
-              },
-              body: JSON.stringify({
-                  tokenMail: localStorage.getItem('LinkTreeToken')
-              })
-          }).then(res => res.json())
-          .then(data => {
-              if(data.status === 'error') return toast.error(data.error);
-              setLinks(data.links);
-          })
-      }, [])
+  useEffect(() => {
+    if (!localStorage.getItem('LinkTreeToken')) return router.push('/login');
+    fetch(`https://mylinktree-production.up.railway.app/load/links`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        tokenMail: localStorage.getItem('LinkTreeToken')
+      })
+    }).then(res => res.json())
+      .then(data => {
+        if (data.status === 'error') return toast.error(data.error);
+        setLinks(data.links);
+      })
+  }, [])
   return (
     <>
       <div>
@@ -75,14 +75,14 @@ export const links = () => {
                 {links.map((link, index) => (
                   <div className='flex flex-row my-2 justify-evenly' key={index}>
                     <label>
-                      URL: 
+                      URL:
                       <input className='p-1 px-2 ml-2 border border-gray-200 rounded-md shadow-md outline-none' type='text' value={link.url} onChange={e => handleLinkChange(index, 'url', e.target.value)} />
                     </label>
                     <label>
                       Title:
                       <input className='p-1 px-2 ml-2 border border-gray-200 rounded-md shadow-md outline-none' type='text' value={link.title} onChange={e => handleLinkChange(index, 'title', e.target.value)} />
                     </label>
-                    <button className='px-4 py-2 ml-3 text-white bg-indigo-500 rounded-md shadow-sm' type='button' onClick={() => {handleRemoveLink(index)}}>
+                    <button className='px-4 py-2 ml-3 text-white bg-indigo-500 rounded-md shadow-sm' type='button' onClick={() => { handleRemoveLink(index) }}>
                       Remove Link
                     </button>
                   </div>

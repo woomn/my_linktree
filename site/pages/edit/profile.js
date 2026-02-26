@@ -34,7 +34,7 @@ export const profile = () => {
     }, [userData]);
     const saveProfile = e => {
         e.preventDefault();
-        fetch(`http://localhost:8080/save/profile`, {
+        fetch(`https://mylinktree-production.up.railway.app/save/profile`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -53,7 +53,7 @@ export const profile = () => {
     }
     const saveSocials = e => {
         e.preventDefault();
-        fetch(`http://localhost:8080/save/socials`, {
+        fetch(`https://mylinktree-production.up.railway.app/save/socials`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -71,7 +71,7 @@ export const profile = () => {
 
     useEffect(() => {
         if (!localStorage.getItem('LinkTreeToken')) return router.push('/login');
-        fetch(`http://localhost:8080/load/socials`, {
+        fetch(`https://mylinktree-production.up.railway.app/load/socials`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import UserContext from '@/context/userContext';
@@ -12,7 +12,7 @@ export const UserHeader = () => {
     localStorage.removeItem("LinkTreeToken");
     router.push("/login"); // เช็กชื่อ route จริง
   }
-  
+
   const { userData, setUserData } = useContext(UserContext);
   const { role, avatar, handle } = userData;
 
@@ -22,7 +22,7 @@ export const UserHeader = () => {
       return;
     }
 
-    fetch("http://localhost:8080/data/dashboard", {
+    fetch("https://mylinktree-production.up.railway.app/data/dashboard", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export const UserHeader = () => {
         console.log(err);
       });
   }, []);
-  
+
   return (
     <>
       <header className="flex flex-row items-center justify-between">
