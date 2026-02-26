@@ -30,9 +30,51 @@ const Handle = () => {
     if (error) return toast.error("Failed to load profile");
     const userFound = apiResponse?.status === 'success';
     const data = apiResponse?.userData || {};
+    const theme = data.theme || 'default';
 
-    // ถ้ายังไม่มี Handle (หน้าเพจเพิ่งเริ่มรัน) หรือ กำลังโหลดข้อมูลจาก API 
-    // ให้ค้างไว้ที่หน้า Loading ก่อน เพื่อไม่ให้เห็น "User Not Found" แวบขึ้นมา
+    // Theme Config
+    const themeStyles = {
+        default: {
+            bg: 'bg-[#f8fafc]',
+            overlay: 'from-indigo-50/50',
+            cardWrap: 'max-w-2xl',
+            accent: 'text-indigo-600',
+            footerBg: 'bg-white/80'
+        },
+        dark: {
+            bg: 'bg-[#0f172a]',
+            overlay: 'from-purple-900/20',
+            cardWrap: 'max-w-2xl',
+            accent: 'text-purple-400',
+            footerBg: 'bg-slate-800/80',
+            textColor: 'text-white'
+        },
+        sunset: {
+            bg: 'bg-gradient-to-br from-orange-400 to-rose-500',
+            overlay: 'from-white/10',
+            cardWrap: 'max-w-2xl',
+            accent: 'text-rose-600',
+            footerBg: 'bg-white/90'
+        },
+        ocean: {
+            bg: 'bg-gradient-to-br from-blue-400 to-cyan-500',
+            overlay: 'from-white/10',
+            cardWrap: 'max-w-2xl',
+            accent: 'text-blue-600',
+            footerBg: 'bg-white/90'
+        },
+        forest: {
+            bg: 'bg-[#064e3b]',
+            overlay: 'from-emerald-900/40',
+            cardWrap: 'max-w-2xl',
+            accent: 'text-emerald-400',
+            footerBg: 'bg-slate-900/80',
+            textColor: 'text-white'
+        }
+    }
+
+    const currentTheme = themeStyles[theme] || themeStyles.default;
+
     if (!handle || (!apiResponse && !error)) {
         return <div className='min-h-screen flex items-center justify-center font-bold text-slate-400 animate-pulse'>Loading...</div>
     }
@@ -41,7 +83,7 @@ const Handle = () => {
 
     if (!userFound) {
         return (
-            <div className='flex items-center justify-center min-h-screen px-6 bg-slate-50'>
+            <div className={`flex items-center justify-center min-h-screen px-6 ${themeStyles.default.bg}`}>
                 <div className='max-w-md w-full text-center p-10 bg-white rounded-[2.5rem] shadow-xl shadow-indigo-100 border border-slate-100'>
                     <div className='mb-6 text-6xl'>🥹</div>
                     <h1 className='mb-4 text-3xl font-black tracking-tight text-slate-900'>User Not found</h1>
@@ -63,11 +105,11 @@ const Handle = () => {
     }
 
     return (
-        <div className='min-h-screen bg-[#fcfdff] relative pb-20'>
+        <div className={`min-h-screen relative pb-20 transition-colors duration-700 ${currentTheme.bg}`}>
             {/* พื้นหลังแบบฟุ้งเบาๆ ให้หน้า Profile ดูมีมิติ */}
-            <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-indigo-50/50 to-transparent -z-10"></div>
+            <div className={`absolute top-0 left-0 w-full h-96 bg-gradient-to-b ${currentTheme.overlay} to-transparent -z-10`}></div>
 
-            <div className='max-w-2xl px-4 pt-10 mx-auto'>
+            <div className={`${currentTheme.cardWrap} px-4 pt-10 mx-auto`}>
                 {/* ส่วนของปุ่ม Share ที่เราแต่งไว้จะลอยเด่น */}
                 <div className='flex justify-end mb-4'>
                     <ShareButton />
@@ -84,8 +126,8 @@ const Handle = () => {
 
                 {/* Footer เล็กๆ เท่ๆ */}
                 <div className='mt-16 text-center'>
-                    <Link href="/" className='inline-flex items-center gap-2 px-4 py-2 transition-all border rounded-full shadow-sm bg-white/80 backdrop-blur-sm border-slate-100 hover:shadow-md group'>
-                        <span className='text-xs font-bold transition-colors text-slate-400 group-hover:text-indigo-600'>Made with LinkTree Indigo</span>
+                    <Link href="/" className={`inline-flex items-center gap-2 px-4 py-2 transition-all border rounded-full shadow-sm ${currentTheme.footerBg} backdrop-blur-sm border-white/10 hover:shadow-md group`}>
+                        <span className={`text-xs font-bold transition-colors text-slate-400 group-hover:text-indigo-600`}>Made with LinkTree Indigo</span>
                     </Link>
                 </div>
             </div>

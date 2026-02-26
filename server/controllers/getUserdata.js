@@ -24,7 +24,8 @@ const getUserData = async (req, res) => {
             avatar: user.avatar,
             bio: user.bio,
             links: user.links,
-            handle: user.handle
+            handle: user.handle,
+            theme: user.theme
         }
         const socials = user.socialMedia;
         return res.json({ message: 'found', userData, socials, status: 'success' })

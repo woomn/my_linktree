@@ -18,6 +18,15 @@ export const profile = () => {
     const [name, setName] = useState('');
     const [bio, setBio] = useState('');
     const [avatar, setAvatar] = useState('https://cdn-icons-png.flaticon.com/128/847/847969.png');
+    const [theme, setTheme] = useState('default');
+
+    const themes = [
+        { id: 'default', name: 'Indigo Breeze', colors: 'bg-[#f8fafc] text-indigo-600 border-indigo-500' },
+        { id: 'dark', name: 'Midnight', colors: 'bg-[#0f172a] text-purple-400 border-purple-500' },
+        { id: 'sunset', name: 'Sunset', colors: 'bg-gradient-to-br from-orange-400 to-rose-500 text-white border-white' },
+        { id: 'ocean', name: 'Ocean', colors: 'bg-gradient-to-br from-blue-400 to-cyan-500 text-white border-white' },
+        { id: 'forest', name: 'Forest', colors: 'bg-[#064e3b] text-emerald-400 border-emerald-500' }
+    ]
 
     const handleSocial = (e) => {
         setSocial({
@@ -30,8 +39,10 @@ export const profile = () => {
             setName(userData.name);
             setBio(userData.bio);
             setAvatar(userData.avatar);
+            setTheme(userData.theme || 'default');
         }
     }, [userData]);
+
     const saveProfile = e => {
         e.preventDefault();
         fetch(`https://mylinktree-production.up.railway.app/save/profile`, {
@@ -43,7 +54,8 @@ export const profile = () => {
                 tokenMail: localStorage.getItem('LinkTreeToken'),
                 name: name,
                 bio: bio,
-                avatar: avatar
+                avatar: avatar,
+                theme: theme
             })
         }).then(res => res.json())
             .then(data => {
@@ -88,26 +100,36 @@ export const profile = () => {
 
     return (
         <>
-            <div>
+            <div className="min-h-screen bg-slate-50 pb-20">
                 <UserHeader />
-                <main>
-                    <section>
-                        <div>
-                            <h4 className='mb-5 font-bold text-center'>Edit profile</h4>
-                            <div>
-                                <form onSubmit={saveProfile} className='flex flex-col items-center justify-center'>
-                                    <span className="flex flex-row w-11/12 px-3 py-2 m-auto mb-3 border-2 rounded-md shadow-md focus:outline-one">
-                                        <img className="w-6 mr-4" src="/svg/profile.svg" alt="Profile Icon" />
-                                        <input value={name} onChange={e => setName(e.target.value)} className="w-full focus:outline-none" type="text" placeholder="Set a Name" required />
+                <main className="max-w-4xl mx-auto px-4 pt-10">
+                    <section className="grid md:grid-cols-2 gap-10">
+                        {/* Left Side: Profile & Theme */}
+                        <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
+                            <h4 className='mb-8 text-xl font-bold text-slate-800 flex items-center gap-2'>
+                                <span className="bg-indigo-100 p-2 rounded-lg"><img className="w-5" src="/svg/user.svg" /></span>
+                                Profile Info
+                            </h4>
+                            <form onSubmit={saveProfile} className='flex flex-col gap-4'>
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-xs font-bold text-slate-400 ml-2 uppercase tracking-wider">Display Name</label>
+                                    <span className="flex flex-row items-center px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-50">
+                                        <input value={name} onChange={e => setName(e.target.value)} className="w-full bg-transparent focus:outline-none font-medium" type="text" placeholder="Set a Name" required />
                                     </span>
-                                    <span className="flex flex-row w-11/12 px-3 py-2 m-auto mb-3 border-2 rounded-md shadow-md focus:outline-one">
-                                        <img className="w-6 mr-4" src="/svg/text.svg" alt="Profile Icon" />
-                                        <input value={bio} onChange={e => setBio(e.target.value)} className="w-full focus:outline-none" type="text" placeholder="Enter a bio" required />
+                                </div>
+
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-xs font-bold text-slate-400 ml-2 uppercase tracking-wider">Bio</label>
+                                    <span className="flex flex-row items-center px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-50">
+                                        <input value={bio} onChange={e => setBio(e.target.value)} className="w-full bg-transparent focus:outline-none font-medium" type="text" placeholder="Enter a bio" required />
                                     </span>
-                                    <span className="flex flex-row items-center w-11/12 px-3 py-2 m-auto mb-3 border-2 rounded-md shadow-md focus:outline-one">
-                                        <img className="w-6 mr-4" src="/svg/user.svg" alt="Profile Icon" />
+                                </div>
+
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-xs font-bold text-slate-400 ml-2 uppercase tracking-wider">Profile Picture</label>
+                                    <div className="flex items-center gap-4 px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl">
                                         <input
-                                            className="w-full text-sm focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"
+                                            className="w-full text-xs focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 cursor-pointer"
                                             type="file"
                                             accept="image/*"
                                             onChange={(e) => {
@@ -121,43 +143,64 @@ export const profile = () => {
                                                 }
                                             }}
                                         />
-                                        {avatar && <img className='object-cover w-10 h-10 ml-4 border p-0.5 rounded-full' src={avatar} alt="Avatar" />}
-                                    </span>
-                                    <input className='w-32 px-4 py-2 text-white bg-green-500 border-green-800 rounded-md shadow-md cursor-pointer' type='submit' value='save profile' />
-                                </form>
-                            </div>
+                                        {avatar && <img className='object-cover w-12 h-12 rounded-2xl border-2 border-white shadow-sm' src={avatar} alt="Avatar" />}
+                                    </div>
+                                </div>
+
+                                {/* Theme Selection */}
+                                <div className="mt-4">
+                                    <label className="text-xs font-bold text-slate-400 ml-2 uppercase tracking-wider">Select Theme</label>
+                                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mt-2">
+                                        {themes.map((t) => (
+                                            <div
+                                                key={t.id}
+                                                onClick={() => setTheme(t.id)}
+                                                className={`cursor-pointer group relative overflow-hidden p-3 rounded-2xl border-2 transition-all duration-300 ${theme === t.id ? 'border-indigo-600 shadow-md ring-2 ring-indigo-50' : 'border-slate-100 hover:border-indigo-200'}`}
+                                            >
+                                                <div className={`h-12 w-full rounded-lg mb-2 ${t.colors}`}></div>
+                                                <span className={`text-[10px] font-bold block text-center uppercase tracking-tighter ${theme === t.id ? 'text-indigo-600' : 'text-slate-500'}`}>
+                                                    {t.name}
+                                                </span>
+                                                {theme === t.id && (
+                                                    <div className="absolute top-1 right-1 bg-indigo-600 rounded-full p-0.5 shadow-sm">
+                                                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <button className='w-full mt-6 px-6 py-4 text-white font-bold bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-[0.98]' type='submit'>
+                                    Save Profile & Theme
+                                </button>
+                            </form>
                         </div>
-                        <div className='mt-14'>
-                            <h4 className='mb-5 font-bold text-center'>Edit Socials</h4>
-                            <div>
-                                <form onSubmit={saveSocials} className='flex flex-col items-center justify-center'>
-                                    <span className="flex flex-row w-11/12 px-3 py-2 m-auto mb-3 border-2 rounded-md shadow-md focus:outline-one">
-                                        <img className="w-6 mr-4" src="/svg/facebook.svg" alt="Profile Icon" />
-                                        <input id='facebook' value={social.facebook} onChange={handleSocial} className="w-full focus:outline-none" type="text" placeholder="Enter Facebook Link" required />
+
+                        {/* Right Side: Socials */}
+                        <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 h-fit">
+                            <h4 className='mb-8 text-xl font-bold text-slate-800 flex items-center gap-2'>
+                                <span className="bg-emerald-100 p-2 rounded-lg"><img className="w-5" src="/svg/ig.svg" /></span>
+                                Social Links
+                            </h4>
+                            <form onSubmit={saveSocials} className='flex flex-col gap-4'>
+                                {[
+                                    { id: 'facebook', icon: '/svg/facebook.svg', placeholder: 'Facebook URL' },
+                                    { id: 'x', icon: '/svg/x.svg', placeholder: 'X (Twitter) URL' },
+                                    { id: 'instagram', icon: '/svg/ig.svg', placeholder: 'Instagram URL' },
+                                    { id: 'youtube', icon: '/svg/youtube.svg', placeholder: 'YouTube URL' },
+                                    { id: 'tiktok', icon: '/svg/tiktok.svg', placeholder: 'TikTok URL' },
+                                    { id: 'github', icon: '/svg/github.svg', placeholder: 'GitHub URL' },
+                                ].map((s) => (
+                                    <span key={s.id} className="flex flex-row items-center px-4 py-3 bg-slate-50 border border-slate-100 rounded-2xl focus-within:border-emerald-500 focus-within:ring-2 focus-within:ring-emerald-50">
+                                        <img className="w-5 mr-3 opacity-60" src={s.icon} alt={s.id} />
+                                        <input id={s.id} value={social[s.id] || ''} onChange={handleSocial} className="w-full bg-transparent focus:outline-none text-sm font-medium" type="text" placeholder={s.placeholder} />
                                     </span>
-                                    <span className="flex flex-row w-11/12 px-3 py-2 m-auto mb-3 border-2 rounded-md shadow-md focus:outline-one">
-                                        <img className="w-6 mr-4" src="/svg/x.svg" alt="Profile Icon" />
-                                        <input id='x' value={social.x} onChange={handleSocial} className="w-full focus:outline-none" type="text" placeholder="Enter X link" required />
-                                    </span>
-                                    <span className="flex flex-row w-11/12 px-3 py-2 m-auto mb-3 border-2 rounded-md shadow-md focus:outline-one">
-                                        <img className="w-6 mr-4" src="/svg/ig.svg" alt="Profile Icon" />
-                                        <input id='instagram' value={social.instagram} onChange={handleSocial} className="w-full focus:outline-none" type="text" placeholder="Enter Instagram Link" required />
-                                    </span>
-                                    <span className="flex flex-row w-11/12 px-3 py-2 m-auto mb-3 border-2 rounded-md shadow-md focus:outline-one">
-                                        <img className="w-6 mr-4" src="/svg/youtube.svg" alt="Profile Icon" />
-                                        <input id='youtube' value={social.youtube} onChange={handleSocial} className="w-full focus:outline-none" type="text" placeholder="Enter Youtube Link" required />
-                                    </span>
-                                    <span className="flex flex-row w-11/12 px-3 py-2 m-auto mb-3 border-2 rounded-md shadow-md focus:outline-one">
-                                        <img className="w-6 mr-4" src="/svg/tiktok.svg" alt="Profile Icon" />
-                                        <input id='tiktok' value={social.tiktok} onChange={handleSocial} className="w-full focus:outline-none" type="text" placeholder="Enter Tiktok Link" required />
-                                    </span>
-                                    <span className="flex flex-row w-11/12 px-3 py-2 m-auto mb-3 border-2 rounded-md shadow-md focus:outline-one">
-                                        <img className="w-6 mr-4" src="/svg/github.svg" alt="Profile Icon" />
-                                        <input id='github' value={social.github} onChange={handleSocial} className="w-full focus:outline-none" type="text" placeholder="Enter Github link" required />
-                                    </span>
-                                    <input className='w-32 px-4 py-2 mb-10 text-white bg-green-500 border-green-800 rounded-md shadow-md cursor-pointer' type='submit' value='save socials' />
-                                </form>
-                            </div>
+                                ))}
+                                <button className='w-full mt-4 px-6 py-4 text-white font-bold bg-emerald-600 rounded-2xl shadow-lg shadow-emerald-100 hover:bg-emerald-700 transition-all active:scale-[0.98]' type='submit'>
+                                    Save Social Links
+                                </button>
+                            </form>
                         </div>
                     </section>
                 </main>

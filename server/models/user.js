@@ -9,6 +9,7 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     role: { type: String, enum: ['Creator', 'Brand', 'Agency', 'admin'], default: 'Creator' },
     handle: { type: String, required: true, unique: true },
+    theme: { type: String, default: 'default' },
     links: [{
         url: { type: String },
         title: { type: String },
