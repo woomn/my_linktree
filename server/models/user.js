@@ -10,6 +10,7 @@ const userSchema = new Schema({
     role: { type: String, enum: ['Creator', 'Brand', 'Agency', 'admin'], default: 'Creator' },
     handle: { type: String, required: true, unique: true },
     theme: { type: String, default: 'default' },
+    font: { type: String, default: 'Plus Jakarta Sans' },
     links: [{
         url: { type: String },
         title: { type: String },
