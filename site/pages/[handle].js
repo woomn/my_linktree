@@ -6,37 +6,32 @@ import SocialTree from '../components/SocialTree';
 import ShareButton from '../components/ShareButton';
 import { toast } from 'react-toastify';
 
+import useSWR from 'swr';
+
 const Handle = () => {
 
     const router = useRouter();
-    const [data, setData] = useState({});
-    const [userFound, setUserFound] = useState(false);
+    const handle = router.query?.handle;
+
+    const { data: apiResponse, error } = useSWR(
+        handle ? `https://mylinktree-production.up.railway.app/get/${handle}` : null
+    );
 
     const [social, setSocial] = useState({
-        facebook: '',
-        x: '',
-        instagram: '',
-        youtube: '',
-        tiktok: '',
-        github: ''
+        facebook: '', x: '', instagram: '', youtube: '', tiktok: '', github: ''
     })
 
     useEffect(() => {
-        if (router.query?.handle) {
-            fetch(`https://mylinktree-production.up.railway.app/get/${router.query.handle}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status === 'error') return toast.error(data.error);
-                    if (data.status === 'success') {
-                        setData(data.userData);
-                        setSocial(data.socials);
-                        setUserFound(true);
-                    }
-                }).catch(err => {
-                    console.log(err);
-                })
+        if (apiResponse && apiResponse.status === 'success') {
+            setSocial(apiResponse.socials);
         }
-    }, [router.query])
+    }, [apiResponse]);
+
+    if (error) return toast.error("Failed to load profile");
+    if (!apiResponse && handle) return <div className='min-h-screen flex items-center justify-center font-bold text-slate-400 animate-pulse'>Loading...</div>
+
+    const userFound = apiResponse?.status === 'success';
+    const data = apiResponse?.userData || {};
 
     if (!userFound) {
         return (
