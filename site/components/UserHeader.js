@@ -65,7 +65,7 @@ export const UserHeader = () => {
             </button>
           </Link>
         </div>
-        <Link href={`http://localhost:3000/${handle}`}>
+        <Link href={`/${handle}`}>
           <div className="flex flex-row">
             <div className="inline-flex items-center px-5 py-2 mr-5 text-right bg-gray-200 rounded-lg">
               <div className="flex flex-col flex-wrap text-xs md:text-md">
