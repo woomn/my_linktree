@@ -38,38 +38,82 @@ const Handle = () => {
             bg: 'bg-[#f8fafc]',
             overlay: 'from-indigo-50/50',
             cardWrap: 'max-w-2xl',
-            accent: 'text-indigo-600',
-            footerBg: 'bg-white/80'
+            btn: 'bg-indigo-600 hover:bg-indigo-700 text-white border-transparent',
+            footerBg: 'bg-white/80',
+            textTitle: 'text-slate-800',
+            textBio: 'text-slate-500'
         },
         dark: {
             bg: 'bg-[#0f172a]',
             overlay: 'from-purple-900/20',
             cardWrap: 'max-w-2xl',
-            accent: 'text-purple-400',
+            btn: 'bg-purple-600 hover:bg-purple-700 text-white border-transparent',
             footerBg: 'bg-slate-800/80',
-            textColor: 'text-white'
+            textTitle: 'text-white',
+            textBio: 'text-slate-400'
         },
         sunset: {
             bg: 'bg-gradient-to-br from-orange-400 to-rose-500',
             overlay: 'from-white/10',
             cardWrap: 'max-w-2xl',
-            accent: 'text-rose-600',
-            footerBg: 'bg-white/90'
+            btn: 'bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border-white/20',
+            footerBg: 'bg-white/90',
+            textTitle: 'text-white',
+            textBio: 'text-rose-50'
         },
         ocean: {
             bg: 'bg-gradient-to-br from-blue-400 to-cyan-500',
             overlay: 'from-white/10',
             cardWrap: 'max-w-2xl',
-            accent: 'text-blue-600',
-            footerBg: 'bg-white/90'
+            btn: 'bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border-white/20',
+            footerBg: 'bg-white/90',
+            textTitle: 'text-white',
+            textBio: 'text-blue-50'
         },
         forest: {
             bg: 'bg-[#064e3b]',
             overlay: 'from-emerald-900/40',
             cardWrap: 'max-w-2xl',
-            accent: 'text-emerald-400',
+            btn: 'bg-emerald-600 hover:bg-emerald-700 text-white border-transparent',
             footerBg: 'bg-slate-900/80',
-            textColor: 'text-white'
+            textTitle: 'text-white',
+            textBio: 'text-emerald-200'
+        },
+        galaxy: {
+            bg: 'bg-[#0a0a2e] bg-[url("https://www.transparenttextures.com/patterns/stardust.png")]',
+            overlay: 'from-indigo-600/20',
+            cardWrap: 'max-w-2xl',
+            btn: 'bg-gradient-to-r from-pink-500 to-indigo-600 hover:from-pink-600 hover:to-indigo-700 text-white border-transparent',
+            footerBg: 'bg-indigo-950/80',
+            textTitle: 'text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-indigo-300 font-black',
+            textBio: 'text-indigo-200'
+        },
+        cloud: {
+            bg: 'bg-gradient-to-b from-blue-50 to-indigo-50',
+            overlay: 'from-white/60',
+            cardWrap: 'max-w-2xl',
+            btn: 'bg-white hover:bg-slate-50 text-indigo-700 shadow-sm border-indigo-100',
+            footerBg: 'bg-white/40',
+            textTitle: 'text-indigo-900',
+            textBio: 'text-indigo-400'
+        },
+        retro: {
+            bg: 'bg-[#ff00ff] bg-[url("https://www.transparenttextures.com/patterns/carbon-fibre.png")]',
+            overlay: 'from-cyan-400/20',
+            cardWrap: 'max-w-2xl',
+            btn: 'bg-[#00ffff] hover:bg-[#00eaea] text-black font-black border-2 border-black shadow-[4px_4px_0px_#000]',
+            footerBg: 'bg-black/60',
+            textTitle: 'text-yellow-300 [text-shadow:3px_3px_0px_#00ffff] italic uppercase',
+            textBio: 'text-white font-mono bg-black/40 px-2'
+        },
+        luxury: {
+            bg: 'bg-[#1a1a1a]',
+            overlay: 'from-[#ffd700]/5',
+            cardWrap: 'max-w-2xl',
+            btn: 'bg-[#ffd700] hover:bg-[#e6c200] text-black font-bold uppercase tracking-widest border-transparent',
+            footerBg: 'bg-black/80',
+            textTitle: 'text-[#ffd700] uppercase tracking-[0.2em]',
+            textBio: 'text-gray-400 italic'
         }
     }
 
@@ -105,9 +149,9 @@ const Handle = () => {
     }
 
     return (
-        <div className={`min-h-screen relative pb-20 transition-colors duration-700 ${currentTheme.bg}`}>
+        <div className={`min-h-screen relative pb-20 transition-all duration-700 bg-cover bg-center bg-fixed ${currentTheme.bg}`}>
             {/* พื้นหลังแบบฟุ้งเบาๆ ให้หน้า Profile ดูมีมิติ */}
-            <div className={`absolute top-0 left-0 w-full h-96 bg-gradient-to-b ${currentTheme.overlay} to-transparent -z-10`}></div>
+            <div className={`absolute top-0 left-0 w-full h-[550px] bg-gradient-to-b ${currentTheme.overlay} to-transparent -z-10`}></div>
 
             <div className={`${currentTheme.cardWrap} px-4 pt-10 mx-auto`}>
                 {/* ส่วนของปุ่ม Share ที่เราแต่งไว้จะลอยเด่น */}
@@ -117,10 +161,10 @@ const Handle = () => {
 
                 {/* Wrapper สำหรับ LinkTree และ SocialTree เพื่อคุมระเบียบ */}
                 <div className='flex flex-col items-center'>
-                    <LinkTree data={data} />
+                    <LinkTree data={data} theme={currentTheme} />
 
                     <div className='w-full mt-6'>
-                        <SocialTree social={social} handle={data.handle} />
+                        <SocialTree social={social} handle={data.handle} theme={currentTheme} />
                     </div>
                 </div>
 

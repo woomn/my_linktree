@@ -2,8 +2,10 @@ import React from 'react'
 import LinkTreeCard from './LinkTreeCard';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export const LinkTree = ({ data }) => {
+export const LinkTree = ({ data, theme }) => {
     const { name, avatar, bio, links } = data;
+    const currentTheme = theme || {};
+
     return (
         <>
             <section className='relative max-w-2xl px-4 py-12 mx-auto'>
@@ -20,10 +22,10 @@ export const LinkTree = ({ data }) => {
 
                 {/* Name & Bio - ปรับขนาดและสีให้ดูสบายตา */}
                 <div className="mb-10 text-center">
-                    <h2 className='text-3xl font-extrabold tracking-tight text-gray-800'>
+                    <h2 className={`text-3xl font-extrabold tracking-tight ${currentTheme.textTitle || 'text-gray-800'}`}>
                         {name ? name : 'No Username'}
                     </h2>
-                    <p className='max-w-sm mx-auto mt-2 font-medium leading-relaxed text-gray-500'>
+                    <p className={`max-w-sm mx-auto mt-2 font-medium leading-relaxed ${currentTheme.textBio || 'text-gray-500'}`}>
                         {bio}
                     </p>
                 </div>
@@ -46,7 +48,7 @@ export const LinkTree = ({ data }) => {
                                 }}
                                 className="w-full"
                             >
-                                <LinkTreeCard title={link.title} url={link.url} image={link.icon} linkId={link._id} handle={data.handle} />
+                                <LinkTreeCard title={link.title} url={link.url} image={link.icon} linkId={link._id} handle={data.handle} theme={theme} />
                             </motion.div>
                         ))}
                     </AnimatePresence>
