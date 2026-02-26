@@ -5,16 +5,18 @@ const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 const { registerUser, loginUser } = require('./controllers/auth');
 const { dashboardData } = require('./controllers/dashboard');
-const { getUserData, getUserSocials } = require('./controllers/getUserdata');
+const { getUserData, getUserSocials, trackClick, trackLinkClick } = require('./controllers/getUserdata');
 const { saveSocials, saveProfile, saveLinks } = require('./controllers/saveItems');
 const { loadSocials, loadLinks } = require("./controllers/loadPrevious");
 require('dotenv').config();
 
 application.use(cors());
-application.use(express.json());
+application.use(express.json({ limit: '10mb' }));
+application.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-mongoose.connect("mongodb://127.0.0.1:27017/my_linktree_db").then(() => {
-    console.log("MongoDB Connected")}).catch(err => {console.log(err.message)});
+mongoose.connect(process.env.MONGO_URL).then(() => {
+    console.log("MongoDB Connected")
+}).catch(err => { console.log(err.message) });
 
 application.get('/', (req, res) => {
     res.send(`Server is running on port ${port}`);
@@ -27,7 +29,8 @@ application.post('/data/dashboard', dashboardData);
 
 // application.get("/get/social/:handle", getUserSocials);
 application.get('/get/:handle', getUserData);
-
+application.post('/api/track/:handle', trackClick);
+application.post('/api/track/link/:handle', trackLinkClick);
 application.post('/save/socials', saveSocials);
 application.post('/save/profile', saveProfile);
 application.post('/save/links', saveLinks);

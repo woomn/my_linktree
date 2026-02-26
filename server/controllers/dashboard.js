@@ -32,7 +32,16 @@ const dashboardData = async (req, res) => {
       bio: user.bio,
       avatar: user.avatar,
       handle: user.handle,
-      links: user.links?.length || 0,
+      links: user.links || [],
+      profileViews: user.profileViews || 0,
+      emailClicks: user.emailClicks || 0,
+      igClicks: user.igClicks || 0,
+      facebookClicks: user.facebookClicks || 0,
+      xClicks: user.xClicks || 0,
+      youtubeClicks: user.youtubeClicks || 0,
+      tiktokClicks: user.tiktokClicks || 0,
+      githubClicks: user.githubClicks || 0,
+      dailyViews: user.dailyViews || [],
     };
 
     return res.json({
