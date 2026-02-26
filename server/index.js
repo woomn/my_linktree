@@ -10,7 +10,10 @@ const { saveSocials, saveProfile, saveLinks } = require('./controllers/saveItems
 const { loadSocials, loadLinks } = require("./controllers/loadPrevious");
 require('dotenv').config();
 
-application.use(cors());
+application.use(cors({
+    origin: ["https://my-linktree-kfnw.vercel.app", "http://localhost:3000"],
+    credentials: true
+}));
 application.use(express.json({ limit: '10mb' }));
 application.use(express.urlencoded({ limit: '10mb', extended: true }));
 

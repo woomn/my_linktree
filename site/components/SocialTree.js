@@ -13,7 +13,7 @@ const SocialTree = ({ social, handle }) => {
 
     const trackClick = (type) => {
         if (!handle) return;
-        fetch(`http://localhost:8080/api/track/${handle}`, {
+        fetch(`https://mylinktree-production.up.railway.app/api/track/${handle}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type })

@@ -16,7 +16,7 @@ const dashboard = () => {
       return;
     }
 
-    fetch("http://localhost:8080/data/dashboard", {
+    fetch("https://mylinktree-production.up.railway.app/data/dashboard", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
