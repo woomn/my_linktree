@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-const SocialTree = ({ social, handle }) => {
+const SocialTree = ({ social, handle, theme }) => {
     const { facebook, x, instagram, youtube, tiktok, github, email } = social || {};
 
     const formatUrl = (platform, value) => {
@@ -25,11 +25,11 @@ const SocialTree = ({ social, handle }) => {
     // สไตล์ของวงกลมไอคอน
     const circleClass = "flex items-center justify-center w-12 h-12 bg-white border border-slate-100 rounded-full hover:shadow-md hover:border-slate-200 hover:-translate-y-1 active:scale-95 transition-all duration-300";
 
-    // ไอคอนให้เป็นขาวดำแต่ชัดเจน (ลบ grayscale ทิ้งเพื่อให้สีเดิม หรือถ้าต้องการดำล้วนๆ อาจใช้ CSS filter อื่น แต่ SVG ปกติจะเป็นสีดำอยู่แล้ว)
+    // ไอคอนให้เป็นขาวดำแต่ชัดเจน
     const iconSizeClass = "w-5 h-5 object-contain transition-all duration-300";
 
     // สไตล์ของชื่อไอคอน (Label)
-    const labelClass = "absolute -bottom-6 scale-0 group-hover:scale-100 group-hover:opacity-100 opacity-0 transition-all duration-300 text-[10px] font-bold text-gray-500 uppercase tracking-widest whitespace-nowrap pointer-events-none";
+    const labelClass = `absolute -bottom-6 scale-0 group-hover:scale-100 group-hover:opacity-100 opacity-0 transition-all duration-300 text-[10px] font-bold ${theme?.textTitle || 'text-gray-500'} uppercase tracking-widest whitespace-nowrap pointer-events-none`;
 
     return (
         <div className="flex flex-wrap items-center justify-center gap-6 my-10 social-container">

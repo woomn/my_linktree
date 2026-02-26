@@ -21,11 +21,15 @@ export const profile = () => {
     const [theme, setTheme] = useState('default');
 
     const themes = [
-        { id: 'default', name: 'Indigo Breeze', colors: 'bg-[#f8fafc] text-indigo-600 border-indigo-500' },
-        { id: 'dark', name: 'Midnight', colors: 'bg-[#0f172a] text-purple-400 border-purple-500' },
-        { id: 'sunset', name: 'Sunset', colors: 'bg-gradient-to-br from-orange-400 to-rose-500 text-white border-white' },
-        { id: 'ocean', name: 'Ocean', colors: 'bg-gradient-to-br from-blue-400 to-cyan-500 text-white border-white' },
-        { id: 'forest', name: 'Forest', colors: 'bg-[#064e3b] text-emerald-400 border-emerald-500' }
+        { id: 'default', name: '✨ Indigo Breeze', colors: 'bg-[#f8fafc] text-indigo-600 border-indigo-500' },
+        { id: 'dark', name: '🌙 Midnight', colors: 'bg-[#0f172a] text-purple-400 border-purple-500' },
+        { id: 'sunset', name: '🌅 Sunset Glow', colors: 'bg-gradient-to-br from-orange-400 to-rose-500 text-white border-white' },
+        { id: 'ocean', name: '🌊 Deep Ocean', colors: 'bg-gradient-to-br from-blue-400 to-cyan-500 text-white border-white' },
+        { id: 'forest', name: '🌿 Jungle Forest', colors: 'bg-[#064e3b] text-emerald-400 border-emerald-500' },
+        { id: 'galaxy', name: '🌌 Galaxy', colors: 'bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 text-pink-300 border-pink-400' },
+        { id: 'cloud', name: '☁️ Soft Cloud', colors: 'bg-gradient-to-br from-blue-50 to-indigo-100 text-indigo-700 border-white' },
+        { id: 'retro', name: '🕹️ Retro 80s', colors: 'bg-[#ff00ff] text-yellow-300 border-yellow-200' },
+        { id: 'luxury', name: '💎 Gold Luxury', colors: 'bg-[#1a1a1a] text-[#ffd700] border-[#ffd700]' }
     ]
 
     const handleSocial = (e) => {
