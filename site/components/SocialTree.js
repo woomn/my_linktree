@@ -31,65 +31,32 @@ const SocialTree = ({ social, handle }) => {
     // สไตล์ของชื่อไอคอน (Label)
     const labelClass = "absolute -bottom-6 scale-0 group-hover:scale-100 group-hover:opacity-100 opacity-0 transition-all duration-300 text-[10px] font-bold text-gray-500 uppercase tracking-widest whitespace-nowrap pointer-events-none";
 
+    const socialItems = [
+        { key: 'facebook', value: facebook, icon: '/svg/facebook.svg', label: 'Facebook', type: 'facebook' },
+        { key: 'x', value: x, icon: '/svg/x.svg', label: 'X', type: 'x' },
+        { key: 'instagram', value: instagram, icon: '/svg/ig.svg', label: 'Instagram', type: 'ig' },
+        { key: 'youtube', value: youtube, icon: '/svg/youtube.svg', label: 'YouTube', type: 'youtube' },
+        { key: 'tiktok', value: tiktok, icon: '/svg/tiktok.svg', label: 'TikTok', type: 'tiktok' },
+        { key: 'github', value: github, icon: '/svg/github.svg', label: 'GitHub', type: 'github' },
+        { key: 'email', value: email, icon: '/svg/email.svg', label: 'Email', type: 'email' }
+    ].filter(item => item.value && item.value.trim());
+
     return (
         <div className="flex flex-wrap items-center justify-center gap-6 my-10 social-container">
+            {socialItems.map((item) => {
+                const href = item.key === 'email'
+                    ? `mailto:${item.value.trim()}`
+                    : formatUrl(item.key, item.value.trim());
 
-            {/* Facebook */}
-            <Link className={iconWrapperClass} target="_blank" href={formatUrl('facebook', facebook)} onClick={() => trackClick('facebook')}>
-                <div className={circleClass}>
-                    <img className={iconSizeClass} src="/svg/facebook.svg" alt="facebook" />
-                </div>
-                <span className={labelClass}>Facebook</span>
-            </Link>
-
-            {/* X */}
-            <Link className={iconWrapperClass} target="_blank" href={formatUrl('x', x)} onClick={() => trackClick('x')}>
-                <div className={circleClass}>
-                    <img className={iconSizeClass} src="/svg/x.svg" alt="x" />
-                </div>
-                <span className={labelClass}>X</span>
-            </Link>
-
-            {/* Instagram */}
-            <Link className={iconWrapperClass} target="_blank" href={formatUrl('instagram', instagram)} onClick={() => trackClick('ig')}>
-                <div className={circleClass}>
-                    <img className={iconSizeClass} src="/svg/ig.svg" alt="instagram" />
-                </div>
-                <span className={labelClass}>Instagram</span>
-            </Link>
-
-            {/* YouTube */}
-            <Link className={iconWrapperClass} target="_blank" href={formatUrl('youtube', youtube)} onClick={() => trackClick('youtube')}>
-                <div className={circleClass}>
-                    <img className={iconSizeClass} src="/svg/youtube.svg" alt="youtube" />
-                </div>
-                <span className={labelClass}>YouTube</span>
-            </Link>
-
-            {/* TikTok */}
-            <Link className={iconWrapperClass} target="_blank" href={formatUrl('tiktok', tiktok)} onClick={() => trackClick('tiktok')}>
-                <div className={circleClass}>
-                    <img className={iconSizeClass} src="/svg/tiktok.svg" alt="tiktok" />
-                </div>
-                <span className={labelClass}>TikTok</span>
-            </Link>
-
-            {/* GitHub */}
-            <Link className={iconWrapperClass} target="_blank" href={formatUrl('github', github)} onClick={() => trackClick('github')}>
-                <div className={circleClass}>
-                    <img className={iconSizeClass} src="/svg/github.svg" alt="github" />
-                </div>
-                <span className={labelClass}>GitHub</span>
-            </Link>
-
-            {/* Email */}
-            <Link className={iconWrapperClass} target="_blank" href={`mailto:${email}`} onClick={() => trackClick('email')}>
-                <div className={circleClass}>
-                    <img className={iconSizeClass} src="/svg/email.svg" alt="email" />
-                </div>
-                <span className={labelClass}>Email</span>
-            </Link>
-
+                return (
+                    <Link key={item.key} className={iconWrapperClass} target="_blank" href={href} onClick={() => trackClick(item.type)}>
+                        <div className={circleClass}>
+                            <img className={iconSizeClass} src={item.icon} alt={item.key} />
+                        </div>
+                        <span className={labelClass}>{item.label}</span>
+                    </Link>
+                );
+            })}
         </div>
     );
 };
